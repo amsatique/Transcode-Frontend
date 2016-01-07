@@ -17,7 +17,7 @@ ADD supervisord.conf /etc/
 WORKDIR /
 RUN wget https://nodejs.org/dist/v5.3.0/node-v5.3.0-linux-x64.tar.gz
 RUN mkdir /nodejs
-RUN tar -xvf node-v5.3.0-linux-x64.tar.gz -C /nodejs
+RUN tar -xvf node-v5.3.0-linux-x64.tar.gz -C /nodejs --strip-components=1
 
 # Set the port to 80
 EXPOSE 80
