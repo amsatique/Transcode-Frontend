@@ -1,33 +1,28 @@
 FROM ubuntu:latest
 MAINTAINER Francois Dazan
 
-RUN apt-get update
-# Installing nginx, php and dependencies
-RUN apt-get -y install nginx wget git
+# Installing dependencies
+RUN apt-get update && \
+    apt-get -y install curl wget git g++ make python-dev build-essential
 
-# Installing supervisor
-RUN apt-get -y install supervisor
+# Installing nodejs
+RUN curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash - && \
+    apt-get -y install nodejs
 
-# Adding the configuration file for Nginx and Supervisor
-ADD nginx.conf /etc/nginx/nginx.conf
-ADD default.conf /etc/nginx/conf.d/default.conf
-ADD supervisord.conf /etc/
-
-#Installing Nodejs
-WORKDIR /
-RUN wget https://nodejs.org/dist/v5.3.0/node-v5.3.0-linux-x64.tar.gz
-RUN mkdir /nodejs
-RUN tar -xvf node-v5.3.0-linux-x64.tar.gz -C /nodejs --strip-components=1
-
+# Copy app to container
+COPY app /app
+COPY parameters.json /app/config/parameters.json
 # Set the port to 80
 EXPOSE 80
 
 # Start script
+
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /*.sh
+
 
 # Executing supervisord
 ENTRYPOINT ["/entrypoint.sh"]
 
 # Executing supervisord
-CMD ["supervisord", "-n"]
+CMD ["npm", "start"]
