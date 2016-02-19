@@ -11,7 +11,8 @@ RUN curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash - && \
 
 # Copy app to container
 COPY app /app
-COPY parameters.json /app/config/parameters.json
+#COPY parameters.json /app/config/parameters.json
+
 # Set the port to 80
 EXPOSE 80
 
