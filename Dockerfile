@@ -21,8 +21,8 @@ COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /*.sh
 
 
-# Executing supervisord
+# Executing entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
 
-# Executing supervisord
+# Executing node
 CMD ["npm", "start"]
