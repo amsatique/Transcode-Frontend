@@ -1,0 +1,14 @@
+<h3>Register form : </h3>
+<form [ngFormModel]="_registerForm" (submit)="signUp()">
+    <div>
+        <label for="email">Email</label>
+        <input ngControl="email" id="email" #email="ngForm">
+        <auth-messages control="email"></auth-messages>
+    </div>
+    <div>
+        <label for="password">Password</label>
+        <input ngControl="password" id="password" #password="ngForm">
+        <auth-messages control="password"></auth-messages>
+    </div>
+    <button type="submit" [disabled]="!_registerForm.valid">Register</button>
+</form>
