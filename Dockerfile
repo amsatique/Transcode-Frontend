@@ -9,18 +9,20 @@ RUN apt-get update && \
 RUN curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash - && \
     apt-get -y install nodejs
 
-# Copy app to container
+# Copy app and monitoring to container
 COPY app /app
-COPY pushbullet.sh /pushbullet.sh
 
-# Set the port to 80
-EXPOSE 80
-
-# Start script
-
+# Set script
 COPY entrypoint.sh /entrypoint.sh
+COPY pushbullet.sh /pushbullet.sh
 RUN chmod +x /*.sh
 
+# Start requirement installation
+WORKDIR /app
+RUN npm install
+
+# Expose port
+EXPOSE 80
 
 # Executing entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
